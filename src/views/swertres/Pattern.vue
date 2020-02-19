@@ -5,12 +5,11 @@
 
         <v-row>
             <v-col v-for="n in 9" :key="n+n">
-                <v-card class="mx-auto" max-width="344" outlined>
-                    <v-list-item-avatar tile size="80" color="grey">0</v-list-item-avatar>
+                <v-card class="mx-auto" outlined>
                     <v-list-item two-line>
                         <v-list-item-content>
                             <div class="overline mb-4">OVERLINE</div>
-                            <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
+                            <v-list-item-avatar class="" tile size="80" color="grey">0</v-list-item-avatar>
                             <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
