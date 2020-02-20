@@ -1,20 +1,13 @@
 <template>
-    <nav>
-        <v-app-bar  color="amber">
+    <nav class="mb-12">
+        <v-app-bar  color="amber" fixed elevate-on-scroll>
             <v-app-bar-nav-icon @click="showNav = !showNav" ></v-app-bar-nav-icon>
-
             <v-toolbar-title class="text-uppercase dark--text">
                 <span class="font-weight-light">
                     {{title.split(' ')[0]}}
                 </span>
                 <span>{{title.split(' ')[1]}}</span>
             </v-toolbar-title>
-
-            <v-spacer></v-spacer>
-
-            <span class="font-weight-light grey--text">
-                Developed by: James Jomuad
-            </span>
         </v-app-bar>
 
         <v-navigation-drawer app temporary v-model="showNav" class="indigo">
