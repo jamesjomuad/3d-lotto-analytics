@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'Home',
-  title: "Today's Result",
+  title: "Vision Numbers",
   computed: {
         PageTitle: function () {
             return this.$options.title;

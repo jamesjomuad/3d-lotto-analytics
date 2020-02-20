@@ -60,6 +60,20 @@ export default {
             showNav: false,
             items: [
                 {
+                    navs: [
+                        { 
+                            title: 'Home',
+                            icon: 'mdi-home',
+                            route: '/'
+                        },
+                        { 
+                            title: 'Saved',
+                            icon: 'mdi-content-save',
+                            route: '/saved'
+                        }
+                    ]
+                },
+                {
                     title: '3D Swertres',
                     navs: [
                         { 
@@ -78,7 +92,7 @@ export default {
                             route: '/swertres/pattern'
                         },
                     ]
-                }
+                },
             ]
         }
     }
