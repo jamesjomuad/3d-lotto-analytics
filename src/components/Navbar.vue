@@ -67,22 +67,17 @@ export default {
                     ]
                 },
                 {
-                    title: '3D Swertres',
+                    title: '3D Game',
                     navs: [
                         { 
                             title: 'Analytics',
                             icon: 'mdi-chart-bar',
-                            route: '/swertres/analytics'
-                        },
-                        {
-                            title: 'Combinations',
-                            icon: 'mdi-shape-plus',
-                            route: '/swertres/combinations'
+                            route: '/triple/analytics'
                         },
                         {
                             title: 'Guide Board',
                             icon: 'mdi-checkerboard',
-                            route: '/swertres/pattern'
+                            route: '/triple/tools'
                         },
                     ]
                 },

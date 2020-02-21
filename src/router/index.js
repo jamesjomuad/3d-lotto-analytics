@@ -11,19 +11,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/swertres/analytics',
+    path: '/triple/analytics',
     name: 'Analytics',
-    component: () => import('../views/swertres/Analytics.vue')
+    component: () => import('../views/triple/Analytics.vue')
   },
   {
-    path: '/swertres/combinations',
-    name: 'Combination',
-    component: () => import('../views/swertres/Combination.vue')
-  },
-  {
-    path: '/swertres/pattern',
+    path: '/triple/tools',
     name: 'Pattern',
-    component: () => import('../views/swertres/Pattern.vue')
+    component: () => import('../views/triple/Tools.vue')
   }
 ]
 
