@@ -13,6 +13,7 @@ window._ = underscore
 
 Vue.config.productionTip = false
 
+export const eBus = new Vue();
 
 new Vue({
   router,
@@ -20,3 +21,4 @@ new Vue({
   vuetify,
   render: h => h(App)
 }).$mount('#app')
+

@@ -39,21 +39,22 @@
 
 <script>
 import _ from 'underscore'
+import { eBus } from '../main'
 
 export default {
-    name: "ThreeCard",
-    props: ['value'],
+    name: "threeCard",
+    props: ['value','disabled'],
     data(){
         return {
             vNumber: "18 04 16 52 33",
-            cardData: [1,1,1,1,1,1,1,1,1],
+            cardData: [0,0,0,0,0,0,0,0,0],
             loader: false
         }
     },
     methods:{
         play3D(){
             let maxRedundant = 3
-            let choices = this.value.replace(/ /g, '').split('');
+            let choices = this.vNumber.replace(/ /g, '').split('');
             let output = []
 
             for (output = []; output.length < 9; output) {
@@ -64,13 +65,14 @@ export default {
             }
 
             this.cardData = output
+            this.value.output = output
 
-            console.log(choices)
+            eBus.$emit('threeCard.play', output)
         }
     },
     beforeMount(){
-        if(this.value){
-            this.vNumber = this.value
+        if(typeof this.value == 'object' && this.value.input){
+            this.vNumber = this.value.input
         }else{
             console.log("ThreeCar! Please provide a v-model.")
         }
