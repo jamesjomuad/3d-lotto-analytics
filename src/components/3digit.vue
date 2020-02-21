@@ -1,23 +1,17 @@
 <template>
-    <v-card class="pt-4" :elevation="4" :loading="loader">
+    <v-card class="pt-4" :elevation="4" :loading="loader" :disabled="value.disabled">
         <v-card-title class="headline text-center d-block">3 Digits</v-card-title>
 
         <v-card class="tripleGame d-flex justify-center flex-wrap" flat tile max-width="">
-            <v-list-item-avatar v-for="(num,n) in cardData" :key="n" class="m-0" tile size="80" color="grey">
+            <v-list-item-avatar v-for="(num,n) in this.value.output" :key="n" class="m-0" tile size="80" color="grey">
                 <span class="font-weight-black display-1">{{num}}</span>
             </v-list-item-avatar>
         </v-card>
         
         <v-divider class="my-3"></v-divider>
 
-        <v-card-actions>
+        <v-card-actions class="d-flex justify-content-center">
             <v-spacer></v-spacer>
-            <v-btn color="info">
-                Save <v-icon right>mdi-content-save</v-icon>
-            </v-btn>
-            <v-btn color="info">
-                Add List <v-icon right>mdi-plus-box</v-icon>
-            </v-btn>
             <v-btn color="primary" @click="play3D()">Generate</v-btn>
         </v-card-actions>
     </v-card>
@@ -43,11 +37,10 @@ import { eBus } from '../main'
 
 export default {
     name: "threeCard",
-    props: ['value','disabled'],
+    props: ['value'],
     data(){
         return {
             vNumber: "18 04 16 52 33",
-            cardData: [0,0,0,0,0,0,0,0,0],
             loader: false
         }
     },
@@ -64,7 +57,6 @@ export default {
                 }
             }
 
-            this.cardData = output
             this.value.output = output
 
             eBus.$emit('threeCard.play', output)
@@ -73,6 +65,7 @@ export default {
     beforeMount(){
         if(typeof this.value == 'object' && this.value.input){
             this.vNumber = this.value.input
+            this.value.output = [0,0,0,0,0,0,0,0,0]
         }else{
             console.log("ThreeCar! Please provide a v-model.")
         }

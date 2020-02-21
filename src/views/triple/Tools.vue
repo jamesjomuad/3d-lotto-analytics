@@ -12,8 +12,8 @@
                         outlined
                         :clearable="true"
                         :rules="[rules.required, rules.counter,rules.isNumber]"
+                        @click:clear="onInputClear()"
                         hide-details="auto"
-                        validate-on-blur
                         placeholder="1804165233"
                         height="70"
                         style="font-size: 40px;"
@@ -23,7 +23,7 @@
             </v-row>
         </template>
 
-        <ThreeCard v-model="cardModel" :disabled="true"/>
+        <ThreeCard v-model="cardModel"/>
 
         <v-simple-table 
             dark 
@@ -56,7 +56,12 @@
             </template>
         </v-simple-table>
 
-        <v-btn small class="my-6" @click="history=[]">Clear</v-btn>
+        <v-row>
+            <v-col class="ml-auto d-flex">
+                <v-btn small dark class="ml-auto my-3" @click="history=[]">Clear</v-btn>   
+            </v-col>
+        </v-row>
+        
 
     </v-container>
 </template>
@@ -82,11 +87,20 @@ export default {
             // vNumber: "18 04 16 52 33",
             cardModel: {
                 input: "1804165233",
-                output: null
+                output: null,
+                disabled: false
             },
             rules: {
-                required: value => !!value || 'Required.',
-                counter: value => (value.length <= 10) || 'Max 10 numbers',
+                required: value => {
+                    let isvalid = !!value || 'Required.'
+                    if(!value){
+                        this.cardModel.disabled = true
+                    }else{
+                        this.cardModel.disabled = false
+                    }
+                    return isvalid
+                },
+                counter: value => (value && value.length <= 10) || 'Max 10 numbers',
                 isNumber: value => {
                     return (value > 0) || 'Invalid number.'
                 },
@@ -100,10 +114,9 @@ export default {
         },
     },
     methods:{
-        addHistory(){
+        addHistory(data){
             let tmp = []
-            let output = this.cardModel.output
-
+            let output = data
 
             // Posible box combination
             // Row pattern
@@ -122,12 +135,14 @@ export default {
             tmp.push([output[2],output[5],output[8]])
 
             this.history.push(tmp)
+        },
+        onInputClear(){
+            this.cardModel.output = [0,0,0,0,0,0,0,0,0]
         }
     },
     created(){
         eBus.$on('threeCard.play',(data)=>{
-            this.addHistory()
-            console.log(data)
+            this.addHistory(data)
         })
     }
 }
