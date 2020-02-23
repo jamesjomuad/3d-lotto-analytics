@@ -158,7 +158,7 @@ export default {
         datepicked: {
             handler(){
                 this.data = null;
-                axios.get('/data/swertres/'+this.datepicked.year+'.txt')
+                axios.get('data/swertres/'+this.datepicked.year+'.txt')
                 .then(res => {
                     setTimeout(() => {
                         this.data = this.getDataByDate(this.datepicked, res.data)
