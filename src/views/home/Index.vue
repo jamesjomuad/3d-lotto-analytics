@@ -4,16 +4,13 @@
             <h1 class="font-weight-light mt-1">{{PageTitle}}</h1>
         </div>
 
-        <Results/>
+        <Results :results="results" :loading="!isLoaded"/>
 
-        <v-btn class="ma-2" :loading="isLoaded" :disabled="isLoaded" color="info" @click="loader = 'isLoaded'">
-            Refresh
-            <template v-slot:loader>
-                <span class="custom-loader">
-                    <v-icon light>cached</v-icon>
-                </span>
-            </template>
-        </v-btn>
+        <div class="d-flex">
+            <v-btn class="ml-auto ma-2 my-10" :loading="!isLoaded" :disabled="!isLoaded" color="info" @click="refresh()">
+                Refresh
+            </v-btn>
+        </div>
 
     </v-container>
 </template>
@@ -36,43 +33,57 @@
 </style>
 
 <script>
-import _ from 'underscore'
 import Results from './Results'
+import _ from 'underscore'
+import axios from 'axios'
 
 export default {
     name: 'Home',
     components: {Results},
     data(){
         return {
-            isLoaded: false
+            isLoaded: false,
+            data: [{}]
         }
     },
     computed: {
         PageTitle: function () {
             return this.$options.title;
         },
-        mainNumbers(){
-            return "" + this.vNumber.replace(/ /g, '');
+        results(){
+            let $mapped = _.map(this.data,function(arr){
+                return {
+                    title: arr['LOTTO GAME'],
+                    subtitle: arr['COMBINATIONS'],
+                    date: arr['DRAW DATE'],
+                    price: arr['JACKPOT'],
+                    winners: arr['WINNERS']
+                }
+            })
+            return $mapped
         }
     },
     methods:{
-        randomNum(){
-            return _.random(0, this.mainNumbers.length-1);
-        },
-        play3D(){
-            let maxRedundant = 3
-            let choices = this.mainNumbers.split('');
-            let output = []
-
-            for (output = []; output.length < 9; output) {
-                let n = _.sample(choices)
-                if((output.join('').match(new RegExp(n,'g')) || []).length < maxRedundant){
-                    output.push(n)
-                }
-            }
-
-            this.tripleGame = output
+        refresh(){
+            this.isLoaded = false
+            this.data = [{}]
+            // axios.get('https://bookrr.io/api/result')
+            axios.get('data/result.json')
+            .then(res => {
+                let self = this
+                setTimeout(function(){
+                    self.isLoaded = true
+                    self.data = res.data 
+                },800)
+            })
+            .catch((error)=>{
+                console.log(error)
+                this.isLoaded = true
+            })
         }
+    },
+    mounted(){
+        this.refresh();
     }
 }
 </script>

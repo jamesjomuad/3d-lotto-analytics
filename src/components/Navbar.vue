@@ -13,7 +13,7 @@
         <v-navigation-drawer app temporary v-model="showNav" class="indigo">
             <v-toolbar>
                 <v-btn icon class="hidden-xs-only" @click="showNav = !showNav">
-                    <v-icon>mdi-arrow-left</v-icon>
+                    <v-icon>mdi-reload</v-icon>
                 </v-btn>
                 <v-toolbar-title class="text-uppercase grey--text">
                     <span class="font-weight-light">

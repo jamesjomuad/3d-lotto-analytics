@@ -1,5 +1,5 @@
 <template>
-    <v-card max-width="1024" class="mx-auto" :loading="!loaded">
+    <v-card class="mx-auto" :loading="loading">
         <v-list three-line>
             <template v-for="(item, index) in results">
                 <v-subheader v-if="index==0" :key="index+'header'">Results</v-subheader>
@@ -12,8 +12,15 @@
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                        <v-list-item-title v-html="item.title"></v-list-item-title>
-                        <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+                        <v-list-item-title class="d-flex">
+                            <span class="d-block">{{item.title}}</span>
+                            <small class="d-block ml-auto">{{item.date}}</small>
+                        </v-list-item-title>
+                        <v-list-item-subtitle v-html="item.subtitle" class="font-italic font-weight-bold"></v-list-item-subtitle>
+                        <v-list-item-subtitle class="d-flex">
+                            <span>Winners: {{item.winners}}</span>
+                            <span class="ml-auto">Jackpot: {{item.price}}</span>
+                        </v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
             </template>
@@ -22,41 +29,8 @@
 </template>
 
 <script>
-import _ from 'underscore'
-import axios from 'axios'
-
-
 export default {
     name: 'Results',
-    data(){
-        return {
-            loaded: false,
-            data: [{}]
-        }
-    },
-    computed: {
-        results(){
-            let $mapped = _.map(this.data,function(arr){
-                return {
-                    title: arr['LOTTO GAME'],
-                    subtitle: arr['COMBINATIONS']
-                }
-            })
-            return $mapped
-        }
-    },
-    methods: {
-        refresh(){
-            this.loaded = false
-            axios.get('https://bookrr.io/api/result')
-            .then(res => {
-                this.loaded = true
-                this.data = res.data
-            })
-        }
-    },
-    mounted(){
-        this.refresh();
-    }
+    props: ['results','loading'],
 }
 </script>
