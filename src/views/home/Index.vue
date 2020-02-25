@@ -1,8 +1,19 @@
 <template>
     <v-container>
-        <div class="col col-12 text-center mt-10">
+        <div v-if="PageTitle" class="col col-12 text-center my-8">
             <h1 class="font-weight-light mt-1">{{PageTitle}}</h1>
         </div>
+
+        <Results/>
+
+        <v-btn class="ma-2" :loading="isLoaded" :disabled="isLoaded" color="info" @click="loader = 'isLoaded'">
+            Refresh
+            <template v-slot:loader>
+                <span class="custom-loader">
+                    <v-icon light>cached</v-icon>
+                </span>
+            </template>
+        </v-btn>
 
     </v-container>
 </template>
@@ -26,13 +37,14 @@
 
 <script>
 import _ from 'underscore'
+import Results from './Results'
 
 export default {
     name: 'Home',
+    components: {Results},
     data(){
         return {
-            vNumber: "18 04 16 52 33",
-            tripleGame: _.range(9)
+            isLoaded: false
         }
     },
     computed: {

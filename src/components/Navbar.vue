@@ -67,7 +67,7 @@ export default {
                     ]
                 },
                 {
-                    title: '3D Game',
+                    title: 'Game',
                     navs: [
                         { 
                             title: 'Analytics',
